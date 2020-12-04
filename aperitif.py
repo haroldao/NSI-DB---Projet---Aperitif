@@ -3,6 +3,9 @@ import sqlite3 as sql
 # Import de PrettyTable (affichage du tableau dans la console)
 from prettytable import from_db_cursor
 
+CREATE_PERSON_TABLE = "CREATE TABLE Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT)"
+INSERT_PERSON = "INSERT INTO Personne (nom, prenom) VALUES (?, ?)"
+
 MENU_PROMPT = """
 #=========================================
 #Bienvenu sur l'interface NSI Todo Liste :
@@ -13,7 +16,8 @@ Quelle action souhaitez vous effectuez ? répondre par 1,2,3,4 ou 5:
 3 - U - Modifier la personne apportant tel ou tel article.
 4 - D - Supprimer un article ou une personne.
 5 - Quitter l'application.
-"""
+
+Je veux choisir l'option : """
 
 
 ######################## Application #######################
