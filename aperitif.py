@@ -6,6 +6,10 @@ from prettytable import from_db_cursor
 CREATE_PERSON_TABLE = "CREATE TABLE Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT)"
 INSERT_PERSON = "INSERT INTO Personne (nom, prenom) VALUES (?, ?)"
 
+CREATE_ARTICLES_TABLE = "CREATE TABLE Articles(id INTEGER PRIMARY KEY, designation TEXT, prix INTEGER, quantité unitaire TEXT)"
+INSERT_ARTICLES = "INSERT INTO Articles (designation, prix, quantité unitaire) VALUES (?, ?, ?)"
+
+
 MENU_PROMPT = """
 #=========================================
 #Bienvenu sur l'interface NSI Todo Liste :
