@@ -38,6 +38,23 @@ def create_table():
     connection.close()
 
 
+def show_table(table):
+    connection = sql.connect("aperitif.db")
+    cursor = connection.cursor()
+
+    query = '''
+        SELECT * 
+        FROM {}'''.format(table)
+
+    cursor.execute(query)
+    connection.commit()
+
+    mytable = from_db_cursor(cursor)
+    print("La table actuellement ⏬\n", mytable)
+
+    connection.close()
+
+
 def add_person(last_name, first_name, product):
     connection = sql.connect("aperitif.db")
     cursor = connection.cursor()
@@ -115,6 +132,21 @@ def update_quantity():
     pass
 
 
+def delete_product(id):
+    connection = sql.connect("aperitif.db")
+    cursor = connection.cursor()
+
+    query = '''
+        DELETE
+        FROM Articles
+        WHERE id = {}
+    '''.format(id)
+
+    cursor.execute(query)
+    connection.commit()
+    connection.close()
+
+
 create_table()
 
 
@@ -175,7 +207,10 @@ def app():
                 update_quantity()
 
         elif user_input == "4":
-            pass
+            show_table("Articles")
+            id = int(input("Enter l'id du produit que vous souhaitez supprimer: "))
+            delete_product(id)
+            print("\nVotre produit a bien été supprimé 😎")
         else:
             print("Oups... 😥... essayez encore !")
 
