@@ -140,7 +140,15 @@ def app():
             get_articles(select)
 
         elif user_input == "3":
-            pass
+            select = input(
+                '''Tapez 1 ⏩ si vous souhaitez modifier l"acheteur d'un article\nTapez 2 ⏩ si vous souhaitez modifier la quantité d'un article''')
+
+            if select == "1":
+                update_buyer()
+
+            elif select == "2":
+                update_quantity()
+
         elif user_input == "4":
             pass
         else:
