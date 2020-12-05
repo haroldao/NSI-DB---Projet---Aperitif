@@ -54,6 +54,23 @@ def add_product(product_name, price, quantity):
     connection.close()
 
 
+def get_articles(select):
+    connection = sql.connect("aperitif.db")
+    cursor = connection.cursor()
+
+    if select == "1":
+        query = '''
+            SELECT *
+            FROM Articles
+        '''
+        cursor.execute(query)
+        mytable = from_db_cursor(cursor)
+        print("\n\nTable de la liste complète ⏬\n\n", mytable)
+
+    else:
+        pass
+
+
 create_table()
 
 
@@ -81,7 +98,10 @@ def app():
                 print("Oops outofrange")
 
         elif user_input == "2":
-            pass
+            select = input('''Tapez 1 ⏩ si vous souhaitez consulter la liste complète des articles\nTapez 2 ⏩ si vous souhaitez la liste des articles dont l'acheteur est connu\nTapez 3 ⏩ si vous souhaitez la liste des articles qui n'ont pas d'acheteur\nTapez 4 ⏩ si vous souhaitez consulter la liste des convives\n''')
+
+            get_articles(select)
+
         elif user_input == "3":
             pass
         elif user_input == "4":
