@@ -11,7 +11,6 @@ INSERT_PERSON = "INSERT INTO Personne (nom, prénom, produit) VALUES (?, ?, ?)"
 
 '''CREATE TABLE IF NOT EXISTS Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT, produit TEXT, FOREIGN KEY(produit) REFERENCES Articles(designation))'''
 
-
 MENU_PROMPT = """
 # =========================================
 # Bienvenu sur l'interface NSI Apéritif :
