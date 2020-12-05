@@ -115,7 +115,21 @@ def app():
                 add_person(last_name, first_name, product)
 
             elif select == "2":
-                pass
+                product_name = input("Entrer le nom du produit: ")
+                price_product = input(
+                    "Entrer le prix du produit (à l'unité): ")
+                product_qty = input("Entrer la quantité du produit: ")
+
+                product_buyer_intro = input(
+                    "Souhaitez-vous renseignez le nom de l'acheteur ? [Oui / Non]: ")
+
+                if product_buyer_intro == "Oui":
+                    last_name = input("Entrer le nom du convive ? : ")
+                    first_name = input("Entrer le prénom du convive: ")
+                else:
+                    pass
+                add_product(product_name, price_product, product_qty)
+                add_person(last_name, first_name, product_name)
 
             else:
                 print("Oops outofrange")
