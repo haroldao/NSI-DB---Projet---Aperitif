@@ -13,9 +13,9 @@ INSERT_PERSON = "INSERT INTO Personne (nom, prénom, produit) VALUES (?, ?, ?)"
 
 
 MENU_PROMPT = """
-#=========================================
-#Bienvenu sur l'interface NSI Apéritif :
-#=========================================
+# =========================================
+# Bienvenu sur l'interface NSI Apéritif :
+# =========================================
 Quelle action souhaitez vous effectuez ? répondre par 1,2,3,4 ou 5:
 1 - C - Ajouter un convive, un article.
 2 - R - Consulter la liste des articles
@@ -43,7 +43,7 @@ def show_table(table):
     cursor = connection.cursor()
 
     query = '''
-        SELECT * 
+        SELECT *
         FROM {}'''.format(table)
 
     cursor.execute(query)
@@ -147,6 +147,20 @@ def delete_product(id):
     connection.close()
 
 
+def delete_person(id):
+    connection = sql.connect("aperitif.db")
+    cursor = connection.cursor()
+
+    query = '''
+        DELETE
+        FROM Personne
+        WHERE id = {}'''.format(id)
+
+    cursor.execute(query)
+    connection.commit()
+    connection.close()
+
+
 create_table()
 
 
@@ -207,10 +221,22 @@ def app():
                 update_quantity()
 
         elif user_input == "4":
-            show_table("Articles")
-            id = int(input("Enter l'id du produit que vous souhaitez supprimer: "))
-            delete_product(id)
-            print("\nVotre produit a bien été supprimé 😎")
+            select = input(
+                '''Tapez 1 si vous souhaitez supprimer un article\nTapez 2 si vous souhaitez supprimer un convive\n''')
+
+            if select == "1":
+                show_table("Articles")
+                id = int(
+                    input("Enter l'id du produit que vous souhaitez supprimer: "))
+                delete_product(id)
+                print("\nVotre produit a bien été supprimé 😎")
+
+            elif select == "2":
+                show_table("Personne")
+                id_2 = int(
+                    input("Entrer l'id de la personne que vous souhaitez supprimer: "))
+                delete_person(id_2)
+                print("\nLe convive a bien été supprimé 😎")
         else:
             print("Oups... 😥... essayez encore !")
 
