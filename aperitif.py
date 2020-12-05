@@ -67,6 +67,15 @@ def get_articles(select):
         mytable = from_db_cursor(cursor)
         print("\n\nTable de la liste complète ⏬\n\n", mytable)
 
+    elif select == "2":
+        query_2 = '''
+            SELECT Articles.designation, Articles.prix, Articles.quantité, Personne.nom, Personne.prénom FROM Articles
+            INNER JOIN Personne ON Articles.designation = Personne.produit
+        '''
+
+        cursor.execute(query_2)
+        mytable_2 = from_db_cursor(cursor)
+        print("\n\nTable pour les produits dont on connait le nom de l'acheteur ⏬\n\n", mytable_2)
     else:
         pass
 
