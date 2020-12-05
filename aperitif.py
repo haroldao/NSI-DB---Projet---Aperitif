@@ -9,6 +9,9 @@ INSERT_ARTICLE = "INSERT INTO Articles (designation, prix, quantité) VALUES (?,
 CREATE_PERSON_TABLE = "CREATE TABLE IF NOT EXISTS Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT, produit TEXT references Articles(designation))"
 INSERT_PERSON = "INSERT INTO Personne (nom, prénom, produit) VALUES (?, ?, ?)"
 
+'''CREATE TABLE IF NOT EXISTS Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT, produit TEXT, FOREIGN KEY(produit) REFERENCES Articles(designation))'''
+
+
 MENU_PROMPT = """
 #=========================================
 #Bienvenu sur l'interface NSI Apéritif :
@@ -94,6 +97,24 @@ def get_articles(select):
         pass
 
 
+def update_buyer(id, last_name, first_name):
+    connection = sql.connect("aperitif.db")
+    cursor = connection.cursor()
+    query = '''
+    INNER JOIN Personne ON Articles.designation = Personne.produit
+    UPDATE Articles
+    SET Personne.nom = '{}'
+    WHERE id = {}'''.format(last_name, first_name)
+
+    cursor.execute(query)
+    connection.commit()
+    connection.close()
+
+
+def update_quantity():
+    pass
+
+
 create_table()
 
 
@@ -122,14 +143,15 @@ def app():
 
                 product_buyer_intro = input(
                     "Souhaitez-vous renseignez le nom de l'acheteur ? [Oui / Non]: ")
+                add_product(product_name, price_product, product_qty)
 
                 if product_buyer_intro == "Oui":
                     last_name = input("Entrer le nom du convive ? : ")
                     first_name = input("Entrer le prénom du convive: ")
-                else:
-                    pass
-                add_product(product_name, price_product, product_qty)
-                add_person(last_name, first_name, product_name)
+                    add_person(last_name, first_name, product_name)
+
+                elif product_buyer_intro == "Non":
+                    add_product(product_name, price_product, product_qty)
 
             else:
                 print("Oops outofrange")
@@ -141,10 +163,13 @@ def app():
 
         elif user_input == "3":
             select = input(
-                '''Tapez 1 ⏩ si vous souhaitez modifier l"acheteur d'un article\nTapez 2 ⏩ si vous souhaitez modifier la quantité d'un article''')
+                '''Tapez 1 ⏩ si vous souhaitez modifier l"acheteur d'un article\nTapez 2 ⏩ si vous souhaitez modifier la quantité d'un article\n''')
 
             if select == "1":
-                update_buyer()
+                id = int(input("Entrez l'id"))
+                last_name = input("Entrer le nom de famille")
+                first_name = input("Entrer le prénom")
+                update_buyer(id, last_name, first_name)
 
             elif select == "2":
                 update_quantity()
