@@ -123,10 +123,12 @@ def update_buyer(id, last_name, first_name):
     connection = sql.connect("aperitif.db")
     cursor = connection.cursor()
     query = '''
+    SELECT * FROM Articles
     INNER JOIN Personne ON Articles.designation = Personne.produit
     UPDATE Articles
     SET Personne.nom = '{}'
-    WHERE id = {}'''.format(last_name, first_name)
+    SET Personne.prénom = '{}'
+    WHERE id = {}'''.format(last_name, first_name, id)
 
     cursor.execute(query)
     connection.commit()
@@ -221,9 +223,10 @@ def app():
                 '''Tapez 1 ⏩ si vous souhaitez modifier l"acheteur d'un article\nTapez 2 ⏩ si vous souhaitez modifier la quantité d'un article\n''')
 
             if select == "1":
-                id = int(input("Entrez l'id"))
-                last_name = input("Entrer le nom de famille")
-                first_name = input("Entrer le prénom")
+                show_table("Personne")
+                id = int(input("Entrez l'id: "))
+                last_name = input("Entrer le nom de famille: ")
+                first_name = input("Entrer le prénom: ")
                 update_buyer(id, last_name, first_name)
 
             elif select == "2":
@@ -245,6 +248,7 @@ def app():
                 id_2 = int(
                     input("Entrer l'id de la personne que vous souhaitez supprimer: "))
                 delete_person(id_2)
+                delete_product(id_2)
                 print("\nLe convive a bien été supprimé 😎")
         else:
             print("Oups... 😥... essayez encore !")
