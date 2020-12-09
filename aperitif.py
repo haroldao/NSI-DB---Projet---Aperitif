@@ -135,8 +135,17 @@ def update_buyer(id, last_name, first_name):
     connection.close()
 
 
-def update_quantity():
-    pass
+def update_quantity(quantity, id):
+    connection = sql.connect("aperitif.db")
+    cursor = connection.cursor()
+    query = '''
+        UPDATE Articles
+        SET quantité = '{}'
+        WHERE id = {}'''.format(quantity, id)
+
+    cursor.execute(query)
+    connection.commit()
+    connection.close()
 
 
 def delete_product(id):
@@ -230,7 +239,10 @@ def app():
                 update_buyer(id, last_name, first_name)
 
             elif select == "2":
-                update_quantity()
+                show_table("Articles")
+                id = int(input("Entrer l'id: "))
+                quantity = input("Entrer la quantité souhaitez : ")
+                update_quantity(quantity, id)
 
         elif user_input == "4":
             select = input(
