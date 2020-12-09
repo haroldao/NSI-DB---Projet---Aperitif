@@ -218,7 +218,7 @@ def app():
                     pass
 
             else:
-                print("Oops outofrange")
+                print("Selectionnez 1 ou 2...")
 
         elif user_input == "2":
             select = input('''Tapez 1 ⏩ si vous souhaitez consulter la liste complète des articles\nTapez 2 ⏩ si vous souhaitez la liste des articles dont l'acheteur est connu\nTapez 3 ⏩ si vous souhaitez la liste des articles qui n'ont pas d'acheteur\nTapez 4 ⏩ si vous souhaitez consulter la liste des convives\n''')
