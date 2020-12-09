@@ -196,7 +196,7 @@ def app():
                     add_person(last_name, first_name, product_name)
 
                 elif product_buyer_intro == "Non":
-                    add_product(product_name, price_product, product_qty)
+                    pass
 
             else:
                 print("Oops outofrange")
