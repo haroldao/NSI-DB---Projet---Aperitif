@@ -3,10 +3,10 @@ import sqlite3 as sql
 # Import de PrettyTable (affichage du tableau dans la console)
 from prettytable import from_db_cursor
 
-CREATE_ARTICLE_TABLE = "CREATE TABLE IF NOT EXISTS Articles(id INTEGER PRIMARY KEY, designation TEXT, prix INTEGER, quantité unitaire TEXT)"
-INSERT_ARTICLE = "INSERT INTO Articles (designation, prix, quantité) VALUES (?, ?, ?)"
+CREATE_ARTICLE_TABLE = "CREATE TABLE Articles(id INTEGER PRIMARY KEY, designation TEXT, prix INTEGER, quantité unitaire TEXT, acheteur TEXT DEFAULT NULL REFERENCES Personne(id))"
+INSERT_ARTICLE = "INSERT INTO Articles (designation, prix, quantité, acheteur) VALUES (?, ?, ?, ?)"
 
-CREATE_PERSON_TABLE = "CREATE TABLE IF NOT EXISTS Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT, produit TEXT references Articles(designation))"
+CREATE_PERSON_TABLE = "CREATE TABLE Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT, produit TEXT, FOREIGN KEY(produit) REFERENCES Articles(designation))"
 INSERT_PERSON = "INSERT INTO Personne (nom, prénom, produit) VALUES (?, ?, ?)"
 
 '''CREATE TABLE IF NOT EXISTS Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT, produit TEXT, FOREIGN KEY(produit) REFERENCES Articles(designation))'''
