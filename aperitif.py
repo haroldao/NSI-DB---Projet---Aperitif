@@ -123,11 +123,9 @@ def update_buyer(id, last_name, first_name):
     connection = sql.connect("aperitif.db")
     cursor = connection.cursor()
     query = '''
-    SELECT * FROM Articles
-    INNER JOIN Personne ON Articles.designation = Personne.produit
-    UPDATE Articles
-    SET Personne.nom = '{}'
-    SET Personne.prénom = '{}'
+    UPDATE Personne
+    SET nom = '{}',
+    prénom = '{}'
     WHERE id = {}'''.format(last_name, first_name, id)
 
     cursor.execute(query)
