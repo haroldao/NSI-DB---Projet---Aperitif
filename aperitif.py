@@ -179,9 +179,9 @@ def app():
             if select == "1":
                 last_name = input("Entrer le nom du convive ? : ")
                 first_name = input("Entrer le prénom du convive: ")
-                product = input("Entrer le nom du produit qu'elle va amener")
-                price = input("Quel est le prix du produit")
-                quantity = input("Entrez la quantité du produit")
+                product = input("Entrer le nom du produit qu'elle va amener: ")
+                price = input("Quel est le prix du produit: ")
+                quantity = input("Entrez la quantité du produit: ")
 
                 add_product(product, price, quantity, last_name)
                 add_person(last_name, first_name, product)
