@@ -3,10 +3,10 @@ import sqlite3 as sql
 # Import de PrettyTable (affichage du tableau dans la console)
 from prettytable import from_db_cursor
 
-CREATE_ARTICLE_TABLE = "CREATE TABLE Articles(id INTEGER PRIMARY KEY, designation TEXT, prix INTEGER, quantité unitaire TEXT, acheteur TEXT DEFAULT NULL REFERENCES Personne(id))"
+CREATE_ARTICLE_TABLE = "CREATE TABLE IF NOT EXISTS Articles(id INTEGER PRIMARY KEY, designation TEXT, prix INTEGER, quantité unitaire TEXT, acheteur TEXT REFERENCES Personne(id))"
 INSERT_ARTICLE = "INSERT INTO Articles (designation, prix, quantité, acheteur) VALUES (?, ?, ?, ?)"
 
-CREATE_PERSON_TABLE = "CREATE TABLE Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT, produit TEXT, FOREIGN KEY(produit) REFERENCES Articles(designation))"
+CREATE_PERSON_TABLE = "CREATE TABLE IF NOT EXISTS Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT, produit TEXT, FOREIGN KEY(produit) REFERENCES Articles(designation))"
 INSERT_PERSON = "INSERT INTO Personne (nom, prénom, produit) VALUES (?, ?, ?)"
 
 '''CREATE TABLE IF NOT EXISTS Personne(id INTEGER PRIMARY KEY, nom TEXT, prénom TEXT, produit TEXT, FOREIGN KEY(produit) REFERENCES Articles(designation))'''
@@ -63,11 +63,11 @@ def add_person(last_name, first_name, product):
     connection.close()
 
 
-def add_product(product_name, price, quantity):
+def add_product(product_name, price, quantity, buyer):
     connection = sql.connect("aperitif.db")
     cursor = connection.cursor()
 
-    cursor.execute(INSERT_ARTICLE, (product_name, price, quantity))
+    cursor.execute(INSERT_ARTICLE, (product_name, price, quantity, buyer))
 
     connection.commit()
     connection.close()
@@ -99,11 +99,13 @@ def get_articles(select):
 
     elif select == "3":
         query_3 = '''
-            SELECT * FROM 
+            SELECT designation, prix, quantité
+            FROM Articles
+            WHERE acheteur = "NULL"
         '''
         cursor.execute(query_3)
-        mytable_2 = from_db_cursor(cursor)
-        print("\n\nTable pour les produits dont on ne connait pas le nom de l'acheteur ⏬\n\n", mytable_2)
+        mytable_3 = from_db_cursor(cursor)
+        print("\n\nTable pour les produits dont on ne connait pas le nom de l'acheteur ⏬\n\n", mytable_3)
 
     elif select == "4":
         query_4 = '''
@@ -181,7 +183,7 @@ def app():
                 price = input("Quel est le prix du produit")
                 quantity = input("Entrez la quantité du produit")
 
-                add_product(product, price, quantity)
+                add_product(product, price, quantity, last_name)
                 add_person(last_name, first_name, product)
 
             elif select == "2":
@@ -192,14 +194,18 @@ def app():
 
                 product_buyer_intro = input(
                     "Souhaitez-vous renseignez le nom de l'acheteur ? [Oui / Non]: ")
-                add_product(product_name, price_product, product_qty)
 
                 if product_buyer_intro == "Oui":
                     last_name = input("Entrer le nom du convive ? : ")
                     first_name = input("Entrer le prénom du convive: ")
                     add_person(last_name, first_name, product_name)
+                    add_product(product_name, price_product,
+                                product_qty, last_name)
 
                 elif product_buyer_intro == "Non":
+                    no_buyer = 'NULL'
+                    add_product(product_name, price_product,
+                                product_qty, no_buyer)
                     pass
 
             else:
