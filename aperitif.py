@@ -98,8 +98,12 @@ def get_articles(select):
         print("\n\nTable pour les produits dont on connait le nom de l'acheteur ⏬\n\n", mytable_2)
 
     elif select == "3":
-        pass
-    # A faire
+        query_3 = '''
+            SELECT * FROM 
+        '''
+        cursor.execute(query_3)
+        mytable_2 = from_db_cursor(cursor)
+        print("\n\nTable pour les produits dont on ne connait pas le nom de l'acheteur ⏬\n\n", mytable_2)
 
     elif select == "4":
         query_4 = '''
