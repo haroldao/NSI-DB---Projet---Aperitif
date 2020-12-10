@@ -27,6 +27,7 @@ Je veux choisir l'option : """
 
 ######################## Application #######################
 
+# Création de table (si non existante)
 def create_table():
     connection = sql.connect("aperitif.db")
     cursor = connection.cursor()
@@ -35,6 +36,8 @@ def create_table():
     cursor.execute(CREATE_PERSON_TABLE)
     connection.commit()
     connection.close()
+
+# Afficher une table (avec PrettyTable)
 
 
 def show_table(table):
@@ -53,6 +56,8 @@ def show_table(table):
 
     connection.close()
 
+# Ajouter une personne dans la table Personne
+
 
 def add_person(last_name, first_name, product):
     connection = sql.connect("aperitif.db")
@@ -61,6 +66,8 @@ def add_person(last_name, first_name, product):
     cursor.execute(INSERT_PERSON, (last_name, first_name, product))
     connection.commit()
     connection.close()
+
+# Ajouter un produit dans la table Produits
 
 
 def add_product(product_name, price, quantity, buyer):
@@ -71,6 +78,8 @@ def add_product(product_name, price, quantity, buyer):
 
     connection.commit()
     connection.close()
+
+# Avoir la liste des articles (sous forme de tableau(x))
 
 
 def get_articles(select):
@@ -118,6 +127,8 @@ def get_articles(select):
     else:
         pass
 
+# Mettre à jour un acheteur (convive)
+
 
 def update_buyer(id, last_name, first_name):
     connection = sql.connect("aperitif.db")
@@ -132,6 +143,8 @@ def update_buyer(id, last_name, first_name):
     connection.commit()
     connection.close()
 
+# Mettre à jour la quantité
+
 
 def update_quantity(quantity, id):
     connection = sql.connect("aperitif.db")
@@ -144,6 +157,8 @@ def update_quantity(quantity, id):
     cursor.execute(query)
     connection.commit()
     connection.close()
+
+# Supprimer un produit
 
 
 def delete_product(id):
@@ -159,6 +174,8 @@ def delete_product(id):
     cursor.execute(query)
     connection.commit()
     connection.close()
+
+# Supprimer une personne
 
 
 def delete_person(id):
@@ -176,6 +193,8 @@ def delete_person(id):
 
 
 create_table()
+
+############# Application #############
 
 
 def app():
